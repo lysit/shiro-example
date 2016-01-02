@@ -139,6 +139,8 @@ public class CodecAndCryptoTest {
     }
 
 
+    //Shiro还提供对称式加密/解密算法的支持，如AES、Blowfish等；
+    //当前还没有提供对非对称加密/解密算法支持，未来版本可能提供。
     @Test
     public void testAesCipherService() {
         AesCipherService aesCipherService = new AesCipherService();

@@ -21,7 +21,7 @@ public class PasswordHelper {
     public void encryptPassword(User user) {
 
         user.setSalt(randomNumberGenerator.nextBytes().toHex());
-
+        System.out.println("user salt: "+user.getSalt());
         String newPassword = new SimpleHash(
                 algorithmName,
                 user.getPassword(),
@@ -29,5 +29,7 @@ public class PasswordHelper {
                 hashIterations).toHex();
 
         user.setPassword(newPassword);
+        System.out.println("user name: "+ user.getUsername());
+        System.out.println("user password: "+newPassword);
     }
 }

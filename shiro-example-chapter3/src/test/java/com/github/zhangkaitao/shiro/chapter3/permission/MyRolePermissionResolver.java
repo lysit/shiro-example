@@ -11,9 +11,10 @@ import java.util.Collection;
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-26
  * <p>Version: 1.0
+ * PermissionResolver用于解析权限字符串到Permission实例,
+ * RolePermissionResolver用于根据角色解析相应的权限集合。
  */
 public class MyRolePermissionResolver implements RolePermissionResolver {
-    @Override
     public Collection<Permission> resolvePermissionsInRole(String roleString) {
         if("role1".equals(roleString)) {
             return Arrays.asList((Permission)new WildcardPermission("menu:*"));

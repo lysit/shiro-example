@@ -28,7 +28,6 @@ public class UserDaoImpl implements UserDao {
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement psst = connection.prepareStatement(sql, new String[] { "id" });
                 psst.setString(1, user.getUsername());
@@ -53,7 +52,6 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(sql, userId);
     }
 
-    @Override
     public void correlationRoles(Long userId, Long... roleIds) {
         if(roleIds == null || roleIds.length == 0) {
             return;
@@ -66,7 +64,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    @Override
     public void uncorrelationRoles(Long userId, Long... roleIds) {
         if(roleIds == null || roleIds.length == 0) {
             return;
@@ -85,7 +82,6 @@ public class UserDaoImpl implements UserDao {
     }
 
 
-    @Override
     public User findOne(Long userId) {
         String sql = "select id, username, password, salt, locked from sys_users where id=?";
         List<User> userList = jdbcTemplate.query(sql, new BeanPropertyRowMapper(User.class), userId);
@@ -95,7 +91,6 @@ public class UserDaoImpl implements UserDao {
         return userList.get(0);
     }
 
-    @Override
     public User findByUsername(String username) {
         String sql = "select id, username, password, salt, locked from sys_users where username=?";
         List<User> userList = jdbcTemplate.query(sql, new BeanPropertyRowMapper(User.class), username);
@@ -105,13 +100,11 @@ public class UserDaoImpl implements UserDao {
         return userList.get(0);
     }
 
-    @Override
     public Set<String> findRoles(String username) {
         String sql = "select role from sys_users u, sys_roles r,sys_users_roles ur where u.username=? and u.id=ur.user_id and r.id=ur.role_id";
         return new HashSet(jdbcTemplate.queryForList(sql, String.class, username));
     }
 
-    @Override
     public Set<String> findPermissions(String username) {
         //TODO 此处可以优化，比如查询到role后，一起获取roleId，然后直接根据roleId获取即可
         String sql = "select permission from sys_users u, sys_roles r, sys_permissions p, sys_users_roles ur, sys_roles_permissions rp where u.username=? and u.id=ur.user_id and r.id=ur.role_id and r.id=rp.role_id and p.id=rp.permission_id";
